@@ -54,3 +54,15 @@ signatures.
     options:
       show_source: false
       members_order: source
+
+## I/O and simulation
+
+::: pycardinal.io
+    options:
+      show_source: false
+      members_order: source
+
+::: pycardinal.simulate
+    options:
+      show_source: false
+      members_order: source

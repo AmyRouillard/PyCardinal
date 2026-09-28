@@ -6,8 +6,10 @@
 - `tests/` contains pytest checks built from deterministic simulated spectra
   and temporary imzML files. No external MSI dataset is required.
 - `docs/` contains the MkDocs site.
-- `legacy-r/` contains the archived R implementation, documentation, vignettes,
-  and tests retained as the behavior and numerical oracle.
+- `docs/api-reference.md` is the hand-written behavioral guide;
+  `docs/generated-api.md` is generated from public Python docstrings.
+- The original Cardinal authors and publication remain the migration attribution
+  and numerical reference.
 
 ## Checks
 

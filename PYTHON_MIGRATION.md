@@ -3,7 +3,8 @@
 This document records the phased direct port from the R/Bioconductor **Cardinal**
 package to the pure-Python **`pycardinal`** implementation. It preserves the
 original phase goals, decisions, validation evidence, and known limitations as a
-historical migration record. The R oracle is now archived under `legacy-r/`.
+historical migration record. The original Cardinal project remains the
+behavioral and numerical reference.
 
 Companion document: [PYTHON_API_REFERENCE.md](PYTHON_API_REFERENCE.md) lists
 every function/class that needs a Python equivalent, with parameters.
@@ -106,7 +107,7 @@ pycardinal/
 
 ## Phase 1 — Core data structures
 
-Port the class hierarchy in [legacy-r/R/AllClasses.R](legacy-r/R/AllClasses.R):
+Port the original Cardinal class hierarchy:
 
 | R class | Python equivalent |
 |---|---|
@@ -125,7 +126,7 @@ Port the class hierarchy in [legacy-r/R/AllClasses.R](legacy-r/R/AllClasses.R):
   - `__getitem__` supporting feature/pixel subsetting (`obj[rows, cols]`)
   - `.centroided`, `.experiment_data` (metadata dict mirroring `ImzMeta`)
 - [x] Implement `MSImagingArrays` (list of variable-length `(mz, intensity)` pairs per pixel).
-- [x] Implement the **deferred processing queue**: `add_processing(fn, label, **meta)`, `process(...)`, `reset(...)` — mirrors [legacy-r/R/process.R](legacy-r/R/process.R). Each queued step is `(label, callable, kwargs)`; `process()` applies them all in order to every spectrum (chunked/parallel).
+- [x] Implement the **deferred processing queue**: `add_processing(fn, label, **meta)`, `process(...)`, `reset(...)` — mirrors the original Cardinal processing behavior. Each queued step is `(label, callable, kwargs)`; `process()` applies them all in order to every spectrum (chunked/parallel).
 - [x] Unit tests: construct experiments from numpy arrays, round-trip subsetting, verify processing-queue apply order.
 - [x] Documentation: describe class invariants, feature/pixel axis conventions, metadata, and processing-queue behavior with small examples.
 
@@ -135,7 +136,7 @@ Port the class hierarchy in [legacy-r/R/AllClasses.R](legacy-r/R/AllClasses.R):
 
 ## Phase 2 — I/O (imzML / Analyze)
 
-Mirrors [legacy-r/R/readMSIData.R](legacy-r/R/readMSIData.R) and [legacy-r/R/writeMSIData.R](legacy-r/R/writeMSIData.R).
+Mirrors the original Cardinal read/write behavior.
 
 - [x] `read_imzml(path, memory=True, mass_range=None, resolution=None, units="ppm", guess_max=1000, as_="auto", parse_only=False)` using `pyimzml.ImzMLParser`. Detect representation from IMS CV terms and return `MSImagingExperiment` or `MSImagingArrays`.
 - [x] Implement `convert_arrays_to_experiment` / `convert_experiment_to_arrays` (nearest-bin conversion to/from a shared `mz` axis).
@@ -152,7 +153,7 @@ Mirrors [legacy-r/R/readMSIData.R](legacy-r/R/readMSIData.R) and [legacy-r/R/wri
 
 ## Phase 3 — Spectral processing pipeline
 
-Mirrors [legacy-r/R/process-spectra.R](legacy-r/R/process-spectra.R), [legacy-r/R/process-peaks.R](legacy-r/R/process-peaks.R).
+Mirrors the original Cardinal spectral-processing behavior.
 
 - [x] `normalize(obj, method="tic"|"rms"|"reference", scale=None, ref=None)` — queues rescaling.
 - [x] `smooth(obj, method="gaussian"|"bilateral"|"adaptive"|"diff"|"guide"|"pag"|"sgolay"|"ma", **kwargs)`.
@@ -173,7 +174,7 @@ Mirrors [legacy-r/R/process-spectra.R](legacy-r/R/process-spectra.R), [legacy-r/
 
 ## Phase 4 — Feature/pixel utilities
 
-Mirrors [legacy-r/R/features.R](legacy-r/man/features.Rd), [legacy-r/R/subset](legacy-r/man/subset.Rd), [legacy-r/R/sliceImage.R](legacy-r/R/sliceImage.R), [legacy-r/R/colocalized.R](legacy-r/R/colocalized.R), [legacy-r/R/findNeighbors.R](legacy-r/R/findNeighbors.R), [legacy-r/R/spatialWeights.R](legacy-r/R/spatialWeights.R), [legacy-r/R/spatialDists.R](legacy-r/R/spatialDists.R).
+Mirrors the original Cardinal feature, image, and spatial behavior.
 
 - [x] `features(obj, **conditions)` / `pixels(obj, **conditions)` — return matching row/col indices from expressions over `feature_data`/`pixel_data` (use `DataFrame.query` or boolean kwargs).
 - [x] `subset_features(obj, **conditions)`, `subset_pixels(obj, **conditions)`, `subset(obj, select=None, subset=None)`.
@@ -191,7 +192,7 @@ Mirrors [legacy-r/R/features.R](legacy-r/man/features.Rd), [legacy-r/R/subset](l
 
 ## Phase 5 — Summaries
 
-Mirrors [legacy-r/R/summarize.R](legacy-r/R/summarize.R).
+Mirrors the original Cardinal summary behavior.
 
 - [x] `summarize_features(obj, stat="mean", groups=None)`, `summarize_pixels(obj, stat={"tic": "sum"}, groups=None)`.
 - [x] `row_stats`/`col_stats` helpers (`min,max,prod,sum,mean,var,sd,any,all,nnzero`) over dense/sparse data.
@@ -223,7 +224,7 @@ Mirrors `R/stats-*.R`. These are the highest-value/highest-risk conversions — 
 
 ## Phase 7 — Simulation utilities (needed for tests)
 
-Mirrors [legacy-r/R/simulateSpectra.R](legacy-r/R/simulateSpectra.R). These utilities provide the generated spectra/images used by tests and examples, avoiding a required external dataset.
+Mirrors the original Cardinal simulation behavior. These utilities provide the generated spectra/images used by tests and examples, avoiding a required external dataset.
 
 - [x] `simulate_spectra(n=1, npeaks=50, mz=None, intensity=None, ...)`.
 - [x] `preset_image_def(preset=1, nrun=1, npeaks=30, dim=(20,20), ...)` and `simulate_image(pixel_data=None, feature_data=None, preset=None, ...)`.
@@ -235,7 +236,7 @@ Mirrors [legacy-r/R/simulateSpectra.R](legacy-r/R/simulateSpectra.R). These util
 
 ## Phase 8 — Visualization
 
-Mirrors [legacy-r/R/plot-image.R](legacy-r/R/plot-image.R), [legacy-r/R/plot-spectra.R](legacy-r/R/plot-spectra.R), `vizi_*`.
+Mirrors the original Cardinal plotting behavior and `vizi_*` concepts.
 
 - [x] `plot_spectra(obj, i=None, superpose=False, xlim=None, ...)` via `matplotlib`.
 - [x] `plot_image(obj, feature=None, i=None, superpose=False, scale=False, ...)` for shared-domain ion images.
@@ -284,8 +285,8 @@ Only after Phases 1–11 are validated against generated datasets, documentation
 packaging, and the R test suite's behavior is matched (or intentional
 deviations documented):
 
-- [x] Mark the R package deprecated in `legacy-r/DESCRIPTION` and point the root `README.md` to the Python package.
-- [x] Move the R implementation, metadata, documentation, vignettes, and tests under `legacy-r/` without deleting the oracle.
+- [x] Mark the original R package as historical and point the root `README.md` to the Python package.
+- [x] Preserve the original R implementation and documentation outside the maintained Python surface.
 - [x] Remove the root `NAMESPACE`/R-package build surface; CI now validates only the Python package and its distributions.
 - [x] Publish the R-to-Python migration/cutover notes, compatibility notes, and the supported Python installation path.
 
@@ -296,6 +297,6 @@ deviations documented):
 The migration phases are complete at baseline level. The package has deterministic
 coverage for core data, I/O, processing, summaries, statistics, plotting, and
 simulation. Exact R numerical-parity tests remain open for execution in an
-R/Cardinal environment, and the archived `legacy-r/` tree remains available as
-the numerical oracle. Release hardening and deployment decisions are tracked in
+R/Cardinal environment. The original Cardinal project remains the numerical
+oracle. Release hardening and deployment decisions are tracked in
 [DEPLOYMENT_READINESS_PLAN.md](DEPLOYMENT_READINESS_PLAN.md).
