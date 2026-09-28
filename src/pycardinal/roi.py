@@ -72,7 +72,10 @@ def select_roi(
     distances = np.linalg.norm(
         coordinates[:, None, :] - selected_points[None, :, :], axis=2
     )
-    return np.any(distances <= float(tolerance), axis=1)
+    mask: NDArray[np.bool_] = np.asarray(
+        np.any(distances <= float(tolerance), axis=1), dtype=np.bool_
+    )
+    return mask
 
 
 __all__ = ["make_factor", "select_roi"]
