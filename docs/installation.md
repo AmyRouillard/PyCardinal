@@ -32,6 +32,9 @@ The `-e` option installs the working tree in editable mode. `dev` includes
 pytest, Ruff, mypy, and Hypothesis. `docs` includes MkDocs Material and
 mkdocstrings.
 
+The published package is installed as `python-cardinal`, while code imports the
+module as `pycardinal`.
+
 ## Build distributions
 
 The optional `packaging` extra installs the release checks:

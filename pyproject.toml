@@ -3,8 +3,8 @@ requires = ["setuptools>=77", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "pycardinal"
-version = "0.1.0"
+name = "python-cardinal"
+version = "0.1.1"
 description = "Python tools for mass spectrometry imaging data analysis"
 readme = "README.md"
 requires-python = ">=3.14"
@@ -33,7 +33,7 @@ dependencies = [
 ]
 
 [project.urls]
-Documentation = "https://github.com/AmyRouillard/PyCardinal/tree/main/docs"
+Documentation = "https://amyrouillard.github.io/PyCardinal/"
 Repository = "https://github.com/AmyRouillard/PyCardinal"
 Issues = "https://github.com/AmyRouillard/PyCardinal/issues"
 

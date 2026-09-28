@@ -15,6 +15,9 @@ Install the development environment from the repository root:
 python -m pip install -e ".[dev,docs]"
 ```
 
+The published distribution name is `python-cardinal`; the Python import name
+remains `pycardinal`.
+
 The default test suite uses deterministic simulated data and does not require
 private datasets. The completed
 migration history is in [PYTHON_MIGRATION.md](PYTHON_MIGRATION.md).
