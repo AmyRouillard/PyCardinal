@@ -16,9 +16,8 @@ python -m pip install -e ".[dev,docs]"
 ```
 
 The default test suite uses deterministic simulated data and does not require
-private datasets. Exact R numerical parity and release hardening are tracked in
-the [deployment readiness plan](DEPLOYMENT_READINESS_PLAN.md); the completed
-migration history is in [PYTHON_MIGRATION_PLAN.md](PYTHON_MIGRATION_PLAN.md).
+private datasets. The completed
+migration history is in [PYTHON_MIGRATION.md](PYTHON_MIGRATION.md).
 
 ### Quickstart
 
@@ -49,10 +48,9 @@ fork is hosted at [github.com/AmyRouillard/PyCardinal](https://github.com/AmyRou
 ### Attribution
 
 PyCardinal is maintained by Amy Rouillard as a direct Python port and fork of
-the Cardinal mass-spectrometry imaging project. The original R implementation and
-its license are preserved under [`legacy-r/`](legacy-r/). Please acknowledge the
-original Cardinal authors and publication when using work derived from Cardinal;
-the citation details are preserved in [legacy-r/inst/CITATION](legacy-r/inst/CITATION).
+the Cardinal mass-spectrometry imaging project. The original R implementation
+and its license are preserved on the `devel` branch. Please acknowledge the
+original Cardinal authors and publication when using work derived from Cardinal.
 
 Suggested citation for the original Cardinal work:
 
@@ -60,80 +58,4 @@ Suggested citation for the original Cardinal work:
 > “Cardinal v.3: a versatile open-source software for mass spectrometry imaging
 > analysis.” *Nature Methods* 20, 1883–1886 (2023).
 > [doi:10.1038/s41592-023-02070-z](https://doi.org/10.1038/s41592-023-02070-z)
-
-## Cardinal R package
-
-*Cardinal* provides an R/Bioconductor interface for manipulating mass
-spectrometry imaging datasets. The original R implementation remains the
-behavior and numerical reference for this migration, archived under
-[`legacy-r/`](legacy-r/). The Python package at the repository root is the
-maintained implementation.
-
-## User Installation
-
-### Bioconductor Release
-
-*Cardinal* can be installed via the *BiocManager* package.
-
-This is the **recommended** installation method.
-
-```{r install, eval=FALSE}
-if (!require("BiocManager", quietly = TRUE))
-    install.packages("BiocManager")
-
-BiocManager::install("Cardinal")
-```
-
-The same function can be used to update *Cardinal* and other Bioconductor packages.
-
-Once installed, *Cardinal* can be loaded with `library()`:
-
-```{r library, eval=FALSE}
-library(Cardinal)
-```
-
-### Github Release
-
-*Cardinal* can also be installed via the *remotes* package.
-
-```{r install, eval=FALSE}
-if (!require("remotes", quietly = TRUE))
-    install.packages("remotes")
-
-remotes::install_github("kuwisdelu/Cardinal", ref=remotes::github_release())
-```
-
-Previous releases can be installed by specifying the exact version.
-
-```{r library, eval=FALSE}
-remotes::install_github("kuwisdelu/Cardinal@v3.6.2")
-```
-
-## Developer Installation
-
-### Bioconductor Devel
-
-The Bioconductor development version of *Cardinal* can also be installed via the *BiocManager* package.
-
-```{r install, eval=FALSE}
-BiocManager::install("Cardinal", version="devel")
-```
-
-This version is **unstable** and should not be used for critical work. However, it is typically more stable than Github devel.
-
-This version should *typically* pass `R CMD check` without errors.
-
-### Github Devel
-
-The most cutting edge version of *Cardinal* can be installed from Github via the *remotes* package.
-
-```{r install, eval=FALSE}
-if (!require("remotes", quietly = TRUE))
-    install.packages("remotes")
-
-remotes::install_github("kuwisdelu/Cardinal")
-```
-
-This version is **unstable** and only recommended for developers. It should not be used for critical work.
-
 
