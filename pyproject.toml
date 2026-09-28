@@ -7,7 +7,7 @@ name = "pycardinal"
 version = "0.1.0"
 description = "Python tools for mass spectrometry imaging data analysis"
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = ">=3.14"
 license = "Artistic-2.0"
 license-files = ["LICENSE"]
 keywords = ["mass spectrometry imaging", "imaging mass spectrometry", "imzML"]
@@ -15,10 +15,6 @@ classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Science/Research",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.10",
-    "Programming Language :: Python :: 3.11",
-    "Programming Language :: Python :: 3.12",
-    "Programming Language :: Python :: 3.13",
     "Programming Language :: Python :: 3.14",
     "Topic :: Scientific/Engineering",
 ]

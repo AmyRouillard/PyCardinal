@@ -2,7 +2,7 @@
 
 ## Requirements
 
-- Python 3.10 or newer.
+- Python 3.14 or newer.
 - A virtual environment is recommended.
 
 ## Install for development
@@ -13,7 +13,7 @@ package with development and documentation tools:
 === "Windows PowerShell"
 
     ```powershell
-    py -3 -m venv .venv
+    py -3.14 -m venv .venv
     .\.venv\Scripts\Activate.ps1
     python -m pip install --upgrade pip
     python -m pip install -e ".[dev,docs]"
@@ -22,7 +22,7 @@ package with development and documentation tools:
 === "macOS / Linux"
 
     ```sh
-    python3 -m venv .venv
+    python3.14 -m venv .venv
     source .venv/bin/activate
     python -m pip install --upgrade pip
     python -m pip install -e ".[dev,docs]"
@@ -49,9 +49,8 @@ for a non-editable local validation:
 python -m pip install --force-reinstall dist/pycardinal-*.whl
 ```
 
-The supported Python range is `>=3.10`; CI validates Python 3.10, 3.11, 3.12,
-3.13, and 3.14, plus source and wheel artifact installation. Python 3.14.2 is
-supported.
+The package requires Python `>=3.14`. Python 3.14.2 is supported, along with
+source and wheel artifact installation.
 
 ## Tests
 
